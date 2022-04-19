@@ -1,0 +1,10 @@
+- name: Copy compose project directory into vagrant box
+  copy:
+    src: ../files/compose
+    dest: /tmp
+  
+- name: Run docker-compose
+  docker_compose:
+    project_src: /tmp/compose
+  register: output
+
