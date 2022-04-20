@@ -1,0 +1,32 @@
+- name: Download and unpack node exporter binary file to /usr/local/bin
+  unarchive:
+    src: "https://github.com/prometheus/node_exporter/releases/download/v1.3.1/node_exporter-1.3.1.linux-amd64.tar.gz"
+    dest: "/usr/local/bin/"
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+    owner: 'root'
+    group: 'root'
+
+- name: Create group 'node_exporter'
+  group:
+    name: "node_exporter"
+    state: present
+
+- name: Create user 'node_exporter'
+  user:
+    name: "node_exporter"
+    group: "node_exporter"
+    state: present
+
+- name: Install systemd-unit file
+  template:
+    src: ../templates/node_exporter.service
+    dest: /etc/systemd/system/node_exporter.service    
+    
+- name: Make sure 'node_exporter' service is started and enabled
+  systemd:
+    name: node_exporter
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
