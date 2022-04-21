@@ -15,3 +15,5 @@ cd test-Vagrantfile
 vagrant up
 ```
 Open http://127.0.0.1:3000 in your favourite browser
+
+user/password: ubuntu2004/ubuntu2004
